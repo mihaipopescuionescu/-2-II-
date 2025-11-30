@@ -1,0 +1,29 @@
+#!/bin/bash
+lista="`ls *.html`"
+resultado=""
+for i in ${lista}; do
+	ultimas=`tail -n 2 ${i}`
+	resultado=${resultado}${ultimas}
+	echo i; echo $i
+done
+echo ${resultado} | cat >> $1
+
+# EXPLICACIÓN DEL CÓDIGO LÍNEA A LÍNEA
+
+# Línea 1: Indicamos que es un script de bash
+
+# Línea 2: Ponemos comillas `` para utilizar la salida del comando, que guardamos en la variable lista, `` es como ejecutar el comando. Ponemos comillas "" para incluir los espacios en blanco en la variable (en este caso no harían falta). El comando ls lista los ficheros con extensión .html del directorio actual
+
+# Línea 3: Vaciamos la variable resultado (sirve para declararla e inicializarla), sería lo mismo que hacer resultado=
+
+# Línea 4: Realizamos un bucle for para recorrer la variable lista, ${lista} es lo mismo que $lista, usamos $ para acceder al valor de la variable. Utilizamos ; para incluir dos comandos en la misma línea. En este caso el uso de las {} no sería necesario ya que no hay lugar a error, pero por ejemplo echo ${nombre}qwerty no sería lo mismo que echo $nombreqwerty, si nombre fuese una variable.
+
+# Línea 5: Al igual que antes utilizamos `` para guardar la salida del comando en la variable ultimas. tail, muestra el final de un fichero. Con la opcion -n N muestra las últimas N líneas. Los ficheros que usamos son los almacenados en la variable lista, ya que estamos utilizando la variable i para recorrerla (la lista).
+
+# Línea 6: Guardamos en la variable resultado el valor que ya tenía más el valor de ultimas. O lo que es lo mismo, añadimos el valor de ultimas a la variable resultado
+
+# Línea 7: Mostramos por pantalla i, y el valor de i
+
+# Línea 8: done, indica que termina el bucle for
+
+# Línea 9: Pasamos la salida de echo a la entrada de cat con el caracter | (pipe), y a su vez añadimos dicha salida al fichero que se nos pase como parámetro de la línea de comandos ($1) con >>
